@@ -3,13 +3,13 @@
 # Reading CSV file into an dictionary
 
 import csv
+import pprint
 from pathlib import Path
-from pprint import pprint
 
 
 def read_csv_to_dict(filename):
-    file_path = Path(__file__).with_name(filename)
     data = {}
+    file_path = Path(__file__).with_name(filename)
     with file_path.open("r") as csv_file:
         reader = csv.DictReader(csv_file)
         row = next(reader)
