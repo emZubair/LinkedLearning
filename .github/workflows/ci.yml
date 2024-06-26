@@ -7,12 +7,12 @@ env:
 
 on:
   pull_request:
-    branches: ['master']
+    branches: ['main']
     paths-ignore: ['docs/**']
     types: [opened, synchronize, reopened]
 
   push:
-    branches: ['master']
+    branches: ['main']
     paths-ignore: ['docs/**']
 
 concurrency:
