@@ -4,22 +4,34 @@
 
 import csv
 import pprint
+from pathlib import Path
 
-def read_csv_filter_rows(filename):
-  # array to hold the filtered data result
-  filtered_data = []
 
-  with open(filename, 'r') as csvfile:
-    reader = csv.reader(csvfile)
-    for row in reader:
-      filtered_data.append(row)
-  return filtered_data
+def filter_by_category(row, category):
+    return row[1] == category
+
+
+def read_csv_filter_rows(filename, filter_to_apply):
+    p = Path(__file__).with_name(filename)
+    data = []
+    with p.open("r") as csv_file:
+        reader = csv.reader(csv_file)
+        for row in reader:
+            if filter_to_apply(row):
+                data.append(row)
+        return data
+
 
 # Filter function (replace with your specific filtering criteria)
 
 
-# Call the read function with a filter function
-filtered_rows = read_csv_filter_rows("Inventory.csv")
+def apply_filter_for(category_name):
+    filtered_rows = read_csv_filter_rows(
+        "Inventory.csv", lambda row: filter_by_category(row, category_name)
+    )
+    print(f"\n\nResults filtered by: {category_name}\n")
+    pprint.pprint(filtered_rows)
 
-# Print filtered data
-pprint.pprint(filtered_rows)
+
+apply_filter_for("Fruits")
+apply_filter_for("Vegetables")
